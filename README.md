@@ -1,6 +1,6 @@
 # 🛠️ Ender 3 Upgrade Project – From Stock to Custom Workhorse
 
-This project documents the full hardware and firmware upgrade of a stock Creality Ender 3 (V1) into a modernized, silent, and flexible 3D printer. The upgrade includes a direct drive extruder, BLTouch auto bed leveling, dual Z-axis support, and a 32-bit silent control board. The process involved custom wiring, firmware configuration, and safety-focused troubleshooting.
+This project documents the full hardware and firmware upgrade of a stock Creality Ender 3 (V1) into a modernized, silent, and flexible 3D printer. The upgrade includes a direct drive extruder, BLTouch auto bed leveling, dual Z-axis support, and a 32-bit silent control board. The process involved custom wiring, firmware configuration, root cause analysis, and safety-focused troubleshooting.
 
 ---
 
@@ -19,51 +19,66 @@ This project documents the full hardware and firmware upgrade of a stock Crealit
 
 ## 🧰 Wiring & Electrical Work
 
-- Replaced original connectors with JST/Dupont using SOMELINE crimping tool
-- Adapted wiring between Creality’s original board and the BTT SKR Mini E3 V3.0
-- Verified pinouts and polarity before powering on
+- Replaced original screw terminals with JST/Dupont connectors using a SOMELINE crimping tool
+- Researched and verified pinouts between Creality and Big Tree Tech control boards
+- Manually crimped connector ends to fit the SKR Mini E3 V3.0 board’s layout and input requirements
+- Performed continuity testing to validate electrical safety before powering on
 
-> ⚠️ **Critical Safety Note:**  
-> During initial power-on, the heated bed began rising in temperature uncontrollably due to a faulty wire crimp. This posed a potential fire hazard. The printer was immediately powered down and disassembled. After re-crimping and reseating the connector, the issue was resolved.  
+> ⚠️ **Critical Safety Incident:**  
+> During the first power-on, the heated bed began rising in temperature uncontrollably due to a failed thermistor connection caused by an incomplete wire crimp. The system did not register accurate temperature data, resulting in thermal runaway risk.  
 >  
-> This incident reinforced the importance of secure electrical connections and thermal safety validation before live testing.
+> The printer was immediately shut down and disassembled. The thermistor wire was re-crimped with a precision connector, restoring correct temperature feedback.  
+>  
+> This incident highlighted the importance of signal integrity and fault isolation in embedded system upgrades.
+
+---
+
+## 🧩 Challenges and Resolutions
+
+### 🔄 Wiring Compatibility & Tooling Acquisition  
+Upgrading from a Creality 32-bit board to a Big Tree Tech SKR Mini E3 V3.0 introduced changes in pin layouts and connector types. Original wiring relied on screw terminals; the new board required crimped JST connectors. To adapt, I researched wiring diagrams, acquired a crimper, and learned connector fabrication through iterative testing. This step ensured proper signal routing and long-term stability.
+
+### 🌡️ Diagnosing Thermal Runaway  
+Uncontrolled heating of the print bed revealed a broken feedback loop in the temperature sensing system. Through signal tracing and root cause analysis, the issue was isolated to a faulty thermistor wire crimp. Rebuilding the connection restored temperature readings, allowing the control board to engage thermal safety protocols. The troubleshooting process deepened understanding of embedded feedback systems and safety-critical logic in 3D printer design.
 
 ---
 
 ## 🧠 Firmware & Configuration
 
-- Flashed a community-sourced custom Marlin firmware tailored for SKR Mini E3 V3.0 + BLTouch setups
-- Resolved a critical issue where the Z-axis attempted to drive into the bed due to incorrect BLTouch initialization
-- Configured Z-offset, mesh leveling, and EEPROM settings
-- Verified homing, probing, and thermal behavior
+- Flashed custom Marlin firmware optimized for SKR Mini E3 V3.0 + BLTouch
+- Resolved Z-axis crash caused by improper BLTouch initialization during homing sequence
+- Tuned Z-offset, mesh leveling, EEPROM parameters, and probe sensitivity
+- Verified thermal control and motion boundaries prior to print execution
 
 > 🛠️ **Firmware Insight:**  
-> The Z-axis crash was caused by the firmware failing to correctly interpret BLTouch signals. Flashing a custom firmware build—shared by another user with a similar hardware configuration—resolved the issue. This highlights the value of open-source collaboration and community-driven support in 3D printing ecosystems.
+> Z-axis collision stemmed from firmware misinterpreting BLTouch signal states. Community firmware builds corrected initialization logic. This experience reinforced the value of open-source collaboration and precise sensor calibration in firmware deployment.
 
 ---
 
 ## 🧪 Testing & Validation
 
-- Completed 2–3 successful prints post-upgrade
-- Verified extruder feed consistency, bed leveling accuracy, and thermal stability
-- Nozzle and bed PID tuning pending
+- Completed 2–3 successful prints with clean extrusion and stable adhesion
+- Validated direct drive reliability and BLTouch bed leveling accuracy
+- Ensured thermistor signal integrity and stable PID heating performance
+- Motion axis calibration pending final tuning
 
 ---
 
 ## 📚 Lessons Learned
 
-- Crimping JST connectors requires precision—test continuity before finalizing
-- BLTouch requires careful Z-offset tuning and firmware alignment
-- Dual Z-axis improves bed leveling consistency and reduces mechanical drift
-- Always test motion systems and thermal behavior with hand-on-stop access during first power-on
+- Crimping requires mechanical precision and patience—faults in electrical continuity can compromise entire subsystems
+- Firmware should be verified against all custom hardware before initial power-on
+- Thermal runaway is preventable through robust wiring, sensor verification, and staged testing
+- Dual Z-axis improves stability, but requires alignment during reassembly
+- Always test systems with instant-access shutdown capabilities when performing first live activation
 
 ---
 
 ## 🚀 Future Enhancements
 
-- Add OctoPrint or Klipper for remote management
-- Install enclosure for temperature control and noise reduction
-- Explore filament runout sensor integration
+- Integrate OctoPrint or Klipper for remote monitoring and control
+- Design enclosure to stabilize ambient temperature and reduce mechanical noise
+- Add filament runout sensor and cable strain reliefs for long-term reliability
 
 ---
 
