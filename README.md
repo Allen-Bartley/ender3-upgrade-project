@@ -1,87 +1,149 @@
-# 🛠️ Ender 3 Upgrade Project – From Stock to Custom Workhorse
+# Ender 3 Hardware Upgrade Project
 
-This project documents the full hardware and firmware upgrade of a stock Creality Ender 3 (V1) into a modernized, silent, and flexible 3D printer. The upgrade includes a direct drive extruder, BLTouch auto bed leveling, dual Z-axis support, and a 32-bit silent control board. The process involved custom wiring, firmware configuration, root cause analysis, and safety-focused troubleshooting.
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen?style=flat-square)
+![Hardware](https://img.shields.io/badge/Hardware-3D_Printer-purple?style=flat-square)
+![Skills](https://img.shields.io/badge/Skills-Hardware_Assembly-orange?style=flat-square)
+![Difficulty](https://img.shields.io/badge/Difficulty-Intermediate-yellow?style=flat-square)
 
----
+## 🎯 Project Overview
 
-## 🔧 Hardware Upgrades
+This project documents the hardware upgrade of a stock Creality Ender 3 (V1) 3D printer with modern components to improve print quality, reduce noise, and add auto-leveling capabilities. The upgrade required hands-on assembly, custom wiring with different connector types, and basic troubleshooting when a wiring issue caused temperature control problems.
 
-| Component | Description |
-|----------|-------------|
-| SKR Mini E3 V3.0 | 32-bit silent control board with TMC2209 drivers |
-| Direct Drive Extruder Kit | Improved filament control and flexible filament support |
-| BLTouch V3.2 | Auto bed leveling sensor with high precision |
-| Dual Z-Axis Kit | Increased mechanical stability and leveling consistency |
-| Hardened Steel MK8 Nozzles | High-temp, wear-resistant nozzles for advanced filaments |
-| Magnetic + PEI Build Surfaces | Flexible, removable build plates for easy part removal |
+This project demonstrates practical hardware assembly skills, connector crimping, basic electrical troubleshooting, and working with aftermarket upgrade components.
 
 ---
 
-## 🧰 Wiring & Electrical Work
+## 🛠️ Hardware Upgrades Installed
 
-- Replaced original screw terminals with JST/Dupont connectors using a SOMELINE crimping tool
-- Researched and verified pinouts between Creality and Big Tree Tech control boards
-- Manually crimped connector ends to fit the SKR Mini E3 V3.0 board’s layout and input requirements
-- Performed continuity testing to validate electrical safety before powering on
-
-> ⚠️ **Critical Safety Incident:**  
-> During the first power-on, the heated bed began rising in temperature uncontrollably due to a failed thermistor connection caused by an incomplete wire crimp. The system did not register accurate temperature data, resulting in thermal runaway risk.  
->  
-> The printer was immediately shut down and disassembled. The thermistor wire was re-crimped with a precision connector, restoring correct temperature feedback.  
->  
-> This incident highlighted the importance of signal integrity and fault isolation in embedded system upgrades.
+| Component | Purpose |
+|----------|---------|
+| **SKR Mini E3 V3.0 Board** | 32-bit control board with silent TMC2209 stepper drivers |
+| **Direct Drive Extruder Kit** | Better filament control and flexible filament compatibility |
+| **BLTouch V3.2** | Automatic bed leveling sensor |
+| **Dual Z-Axis Kit** | Improved mechanical stability and consistent leveling |
+| **Hardened Steel Nozzles** | Better durability for various filament types |
+| **Magnetic PEI Build Surface** | Removable build plate for easier part removal |
 
 ---
 
-## 🧩 Challenges and Resolutions
+## 🔧 Assembly Process
 
-### 🔄 Wiring Compatibility & Tooling Acquisition  
-Upgrading from a Creality 32-bit board to a Big Tree Tech SKR Mini E3 V3.0 introduced changes in pin layouts and connector types. Original wiring relied on screw terminals; the new board required crimped JST connectors. To adapt, I researched wiring diagrams, acquired a crimper, and learned connector fabrication through iterative testing. This step ensured proper signal routing and long-term stability.
+### Wiring and Connectors
+- **Challenge**: New SKR board used JST/Dupont connectors instead of the original screw terminals
+- **Solution**: Purchased SOMELINE crimping tool and appropriate connectors
+- **Process**: 
+  - Researched pinout diagrams for both old and new boards
+  - Cut existing wires and crimped new connector ends to fit SKR board
+  - Tested connections before powering on
 
-### 🌡️ Diagnosing Thermal Runaway  
-Uncontrolled heating of the print bed revealed a broken feedback loop in the temperature sensing system. Through signal tracing and root cause analysis, the issue was isolated to a faulty thermistor wire crimp. Rebuilding the connection restored temperature readings, allowing the control board to engage thermal safety protocols. The troubleshooting process deepened understanding of embedded feedback systems and safety-critical logic in 3D printer design.
-
----
-
-## 🧠 Firmware & Configuration
-
-- Flashed custom Marlin firmware optimized for SKR Mini E3 V3.0 + BLTouch
-- Resolved Z-axis crash caused by improper BLTouch initialization during homing sequence
-- Tuned Z-offset, mesh leveling, EEPROM parameters, and probe sensitivity
-- Verified thermal control and motion boundaries prior to print execution
-
-> 🛠️ **Firmware Insight:**  
-> Z-axis collision stemmed from firmware misinterpreting BLTouch signal states. Community firmware builds corrected initialization logic. This experience reinforced the value of open-source collaboration and precise sensor calibration in firmware deployment.
+### Component Installation
+- Followed upgrade guides and wiring diagrams
+- Installed direct drive extruder and dual Z-axis motors
+- Mounted BLTouch sensor and routed wiring
+- Updated firmware to support new hardware configuration
 
 ---
 
-## 🧪 Testing & Validation
+## ⚠️ Troubleshooting Issue
 
-- Completed 2–3 successful prints with clean extrusion and stable adhesion
-- Validated direct drive reliability and BLTouch bed leveling accuracy
-- Ensured thermistor signal integrity and stable PID heating performance
-- Motion axis calibration pending final tuning
+### Problem: Runaway Heating
+During first power-on test, the heated bed temperature kept rising uncontrollably instead of stopping at the set temperature.
 
----
+### Diagnosis
+- Printer wasn't reading bed temperature correctly
+- Narrowed down to thermistor wiring issue
+- Found one of the thermistor wires had a loose crimp connection
 
-## 📚 Lessons Learned
-
-- Crimping requires mechanical precision and patience—faults in electrical continuity can compromise entire subsystems
-- Firmware should be verified against all custom hardware before initial power-on
-- Thermal runaway is preventable through robust wiring, sensor verification, and staged testing
-- Dual Z-axis improves stability, but requires alignment during reassembly
-- Always test systems with instant-access shutdown capabilities when performing first live activation
-
----
-
-## 🚀 Future Enhancements
-
-- Integrate OctoPrint or Klipper for remote monitoring and control
-- Design enclosure to stabilize ambient temperature and reduce mechanical noise
-- Add filament runout sensor and cable strain reliefs for long-term reliability
+### Resolution
+- Immediately shut down printer for safety
+- Disassembled the connection
+- Re-cut and re-crimped the thermistor wire with better technique
+- Tested connection and verified proper temperature readings
+- System worked correctly after the fix
 
 ---
 
-> Maintainer: Allen Bartley  
-> Repository Created: July 2025  
-> Status: Functional – Under Iterative Improvement
+## 🧩 Firmware Configuration
+
+- Flashed Marlin firmware configured for SKR Mini E3 V3.0 and BLTouch
+- Resolved initial Z-axis homing issue with BLTouch sensor
+- Calibrated bed leveling mesh and Z-offset settings
+- Verified all safety features (thermal runaway protection, endstops) working properly
+
+---
+
+## 📋 Skills Demonstrated
+
+**Hardware Assembly:**
+- Following technical documentation and wiring diagrams
+- Precision connector crimping and electrical connections
+- Mechanical component installation and alignment
+
+**Troubleshooting:**
+- Systematic problem diagnosis (heating issue → temperature sensor → wiring)
+- Safety-first approach to electrical problems
+- Methodical testing and verification
+
+**Technical Learning:**
+- 3D printer control board architecture
+- Firmware flashing and configuration
+- Understanding thermistor operation and feedback loops
+
+---
+
+## ✅ Results
+
+**Successful Outcomes:**
+- ✅ All components installed and working correctly
+- ✅ Printer operates significantly quieter than stock
+- ✅ Automatic bed leveling improves print consistency
+- ✅ Direct drive handles flexible filaments better
+- ✅ Temperature control stable and accurate
+
+**Print Quality:**
+- Completed several successful test prints with clean results
+- Better first layer adhesion with auto-leveling
+- Improved extrusion consistency with direct drive system
+
+---
+
+## 🚀 Future Improvements
+
+Potential additional upgrades:
+- **Remote monitoring** with OctoPrint or similar
+- **Enclosure** for temperature stability and noise reduction
+- **Filament runout sensor** for longer unattended prints
+- **Cable management** improvements for cleaner setup
+
+---
+
+## 💡 Key Takeaways
+
+**Planning is Important:**
+- Research connector types and compatibility before starting
+- Have proper tools (good crimpers make a huge difference)
+- Download firmware and documentation beforehand
+
+**Safety First:**
+- Any heating issues should be addressed immediately
+- Test systems incrementally rather than full power-on
+- Always have an easy shutdown method when testing
+
+**Patience with Details:**
+- Good crimped connections are crucial for reliable operation
+- Take time to do wiring correctly the first time
+- Small mechanical adjustments can have big impacts on print quality
+
+---
+
+## 🔗 Related Projects
+
+- [`gaming-pc-build`](https://github.com/Allen-Bartley/gaming-pc-build) - Custom PC assembly project
+- [`residential-network-architecture`](https://github.com/Allen-Bartley/residential-network-architecture) - Network hardware setup
+
+---
+
+> **Project Status:** Complete and operational  
+> **Completion Date:** July 2025  
+> **Current Use:** Regular printing with improved quality and reliability  
+> **Skills Focus:** Hardware assembly, electrical troubleshooting, component integration
